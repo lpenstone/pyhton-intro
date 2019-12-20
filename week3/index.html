@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>SOL ToDo</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div id="app">
+      <main>
+        <div class="container text-center">
+          <h1>To-Do App</h1>
+          <p>The todo app is a <strong>must-make</strong> when learning front-end development.</p>
+          <form>
+            <label for="new-item">Add new item</label>
+            <input v-model="newItem" id="new-item" type="text" placeholder="New item">
+            <button @click.prevent="addItem()" type="submit">Add Item</button>
+          </form>
+          <ul>
+            <li v-for="(item, index) in items" @click="crossOut(index)" :class="{ 'cross-out': item['complete'] }">{{ item['task'] }}</li>
+            <li v-if="newItem">{{ newItem }}</li>
+          </ul>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      items: [],
+      newItem: ''
+    },
+    methods: {
+      addItem: function () {
+        if (this.newItem) {
+          let newListObj = { task: this.newItem, complete: false}
+          this.items.push(newListObj)
+          this.newItem = ''
+        }
+      },
+      crossOut: function (index) {
+        this.items[index]['complete'] = true
+      }
+    }
+  })
+</script>
